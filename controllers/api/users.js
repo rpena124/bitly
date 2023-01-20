@@ -10,7 +10,7 @@ const checkToken = (req, res) => {
 }
 
 const dataController = {
-  async create (req, res, next) {
+  async create(req, res, next) {
     try {
       const user = await User.create(req.body)
       // token will be a string
@@ -25,7 +25,7 @@ const dataController = {
       res.status(400).json(e)
     }
   },
-  async login (req, res, next) {
+  async login(req, res, next) {
     try {
       const user = await User.findOne({ email: req.body.email })
       if (!user) throw new Error()
@@ -37,13 +37,57 @@ const dataController = {
     } catch {
       res.status(400).json('Bad Credentials')
     }
-  }
+  },
+
 }
 
+// const linkDataController = {
+//   //Index
+//   async index(req, res, next) {
+//     const links = await User.find({ user: req.user._id }).populate('link')
+//     res.status(200).json(links)
+//   },
+//   //Destroy 
+//   destroy(req, res, next) {
+//     User.findByIdAndDelete(req.params.id, (err, deletedLink) => {
+//       if (err) {
+//         res.status(400).send({
+//           msg: err.message,
+//         })
+//       } else {
+//         res.locals.data.link = deletedLink
+//         next()
+//       }
+//     })
+//   },
+//   //Create
+//   create(req, res, next) {
+
+//     req.body.user = req.user._id
+//     User.create(req.body, (err, createdLink) => {
+//       if (err) {
+//         res.status(400).send({
+//           msg: err.message,
+//         })
+//       } else {
+//         res.locals.data.link = createdLink
+//         next()
+//       }
+//     })
+//   },
+//   //Show
+//   async show(req, res, next) {
+
+//     const link = await User.findById(req.params.id).populate('list')
+//     res.status(200).json(link)
+//   }
+
+// }
+
 const apiController = {
-  auth (req, res) {
+  auth(req, res) {
     res.json(res.locals.data.token)
-  }
+  },
 }
 
 module.exports = {
@@ -54,7 +98,7 @@ module.exports = {
 
 /* -- Helper Functions -- */
 // Needed to use a regular function, add it at the end, for hoisting 
-function createJWT (user) {
+function createJWT(user) {
   return jwt.sign(
     // data payload
     { user },

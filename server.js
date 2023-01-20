@@ -23,6 +23,7 @@ app.use(require('./config/checkToken'))
 app.use('/api', routes) <====== Finish code once you got it
 */
 app.use('/api/users', require('./routes/api/users'))
+app.use('/api/links', require('./routes/api/links'))
 
 
 app.get('/api/test', (req, res) => {
