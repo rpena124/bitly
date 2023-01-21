@@ -1,19 +1,27 @@
-const Link = requie('../../models/links')
+const Link = require('../../models/link')
 
 
-const linkDataController = {
+const dataController = {
+
     //Index
-    async index(req, res, next) {
-      const links = await User.find({ user: req.user._id }).populate('link')
-      res.status(200).json(links)
+    index (req, res, next) {
+      Link.find({}, (err, foundLinks)=>{
+        if(err){
+          console.error(err)
+          res.status(400).send(err)
+        }
+        else{
+          res.locals.data.links = foundLinks
+          next()
+        }
+      })
     },
     //Destroy 
     destroy(req, res, next) {
-      User.findByIdAndDelete(req.params.id, (err, deletedLink) => {
+      Link.findByIdAndDelete(req.params.id, (err, deletedLink) => {
         if (err) {
-          res.status(400).send({
-            msg: err.message,
-          })
+          console.error(err)
+          res.status(400).send(err)
         } else {
           res.locals.data.link = deletedLink
           next()
@@ -22,9 +30,7 @@ const linkDataController = {
     },
     //Create
     create(req, res, next) {
-  
-      req.body.user = req.user._id
-      User.create(req.body, (err, createdLink) => {
+      Link.create(req.body, (err, createdLink) => {
         if (err) {
           res.status(400).send({
             msg: err.message,
@@ -36,10 +42,17 @@ const linkDataController = {
       })
     },
     //Show
-    async show(req, res, next) {
-  
-      const link = await User.findById(req.params.id).populate('list')
-      res.status(200).json(link)
+    show(req, res, next) {
+      Link.findById(req.params.id, (err, foundLink)=>{
+        if(err){
+          console.error(err)
+          res.status(400).send(err)
+        }
+        else{
+          res.locals.data.link = foundLink
+          next()
+        }
+      })
     }
   
   }
@@ -56,5 +69,5 @@ const linkDataController = {
 
   module.exports = {
     apiController,
-    linkDataController
+    dataController
   }

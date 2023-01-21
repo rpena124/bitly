@@ -18,25 +18,20 @@ app.use(logger('dev'))
 app.use(favicon(path.join(__dirname, 'build', 'favicon.ico' )))
 app.use(express.static(path.join(__dirname, 'build')))
 
-app.use(require('./config/checkToken'))
+// app.use(require('./config/checkToken'))
 /*
 app.use('/api', routes) <====== Finish code once you got it
 */
-app.use('/api/users', require('./routes/api/users'))
+// app.use('/api/users', require('./routes/api/users'))
 
 app.use('/api/oneTimeLinks', require('./routes/api/oneTimeLinks'))
 
 app.use('/api/links', require('./routes/api/links'))
 
 
-
-app.get('/api/test', (req, res) => {
-    res.json({'eureka': 'you have found it'})
-})
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'))
-})
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'build', 'index.html'))
+// })
 
 app.listen(PORT, () => {
     console.log(`I am listening on ${PORT}`)

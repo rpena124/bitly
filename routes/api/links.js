@@ -1,15 +1,15 @@
 
 const express = require('express')
 const router = express.Router()
-
+const { dataController, apiController } = require('../../controllers/api/links')
 
 //GET: Index api/links ( )
-router.get('/links' , linkDataController.index , apiController.index)
+router.get('/', dataController.index, apiController.index)
 //DELETE 
-router.delete('/link/:id', linkDataController.destroy, apiController.show)
-//Create /api/links
-router.post('/link',linkDataController.create, apiController.show)
-// Show: Get /api/links/:id
-router.get('/:Id', linkDataController.show, apiController.show)
+router.delete('/:id', dataController.destroy, apiController.show)
+// //Create /api/links
+router.post('/',dataController.create, apiController.show)
+// // Show: Get /api/links/:id
+router.get('/:id', dataController.show, apiController.show)
 
 module.exports = router
