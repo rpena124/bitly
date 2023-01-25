@@ -4,10 +4,11 @@ const User = require('../../models/user')
 
 
 const crypto = require('crypto')
+let linkSerialNumber = 0 // This will be changed to model tracked input
 
 
 const dataController = {
-
+    
     //Index
     index (req, res, next) {
       Link.find({}, (err, foundLinks)=>{
@@ -43,6 +44,7 @@ const dataController = {
           })
         } else {
           res.locals.data.link = createdLink
+          linkSerialNumber++
           next()
         }
       })
@@ -108,15 +110,14 @@ function shortLink() {
   const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let result = ''
 
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 25; i++) {
       result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
+
   const hashResult = crypto.createHmac('sha256', 'secret').update(result).digest('hex').split('').reverse().join('')
   const randomSelection = Math.floor(Math.random() * (hashResult.length - 7))
-  let linkTemplate = hashResult.substring(randomSelection, randomSelection + 7)
-  return linkTemplate;
+  let linkTemplate = hashResult.substring(randomSelection, randomSelection + 7).split('')
+  linkTemplate.unshift(linkSerialNumber)
+
+  return linkTemplate.join('').substring(0, 6);
 }
-
-
-
-console.log(shortLink())
