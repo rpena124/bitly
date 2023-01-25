@@ -22,3 +22,4 @@ router.get('/history' , linkDataController.index , apiController.index)
 router.get('/check-token', ensureLoggedIn, checkToken)
 
 module.exports = router
+
