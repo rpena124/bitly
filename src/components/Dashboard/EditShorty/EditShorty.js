@@ -1,3 +1,3 @@
-export default function EditShorty() {
-  return <>Edit shorty</>;
+export default function EditShorty () {
+  return <>Edit shorty</>
 }

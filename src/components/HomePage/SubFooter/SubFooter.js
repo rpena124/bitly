@@ -1,3 +1,3 @@
-export default function SubFooter() {
-  return <>Sub Footer</>;
+export default function SubFooter () {
+  return <>Sub Footer</>
 }

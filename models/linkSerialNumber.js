@@ -1,7 +1,7 @@
-const {Schema, model} = require('mongoose')
+const { Schema, model } = require('mongoose')
 
 const linkSerialNumberSchema = new Schema({
-    linkSerialNumber: {type: Number}
+  linkSerialNumber: { type: Number }
 })
 
 const LinkSerialNumberSchema = model('LinkSerialNumber', linkSerialNumberSchema)

@@ -1,12 +1,12 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require('mongoose')
 
 const oneTimeLinkSchema = new Schema({
-    url: String,
-    shortUrl: String
+  url: String,
+  shortUrl: String
 }, {
-    timestamps: true
-});
+  timestamps: true
+})
 
-const OneTimeLink = model('OneTimeLink', oneTimeLinkSchema);
+const OneTimeLink = model('OneTimeLink', oneTimeLinkSchema)
 
-module.exports = OneTimeLink;
+module.exports = OneTimeLink

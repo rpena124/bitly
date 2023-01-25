@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import AuthPage from '../AuthPage/AuthPage';
-import { Routes, Route} from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import AuthPage from '../AuthPage/AuthPage'
+import { Routes, Route } from 'react-router-dom'
 
-function App() {
+function App () {
   const [state, setState] = useState(null)
-  const [user, setUser ] = useState(null)
+  const [user, setUser] = useState(null)
 
   const fetchState = async () => {
     try {
@@ -19,21 +19,20 @@ function App() {
   useEffect(() => {
     fetchState()
   }, [])
-  
+
   return (
-    <main className="App">
+    <main className='App'>
       {
-        user ?
-        <>
-          <Routes>
-            {/* <Route path="/" element={<NewOrderPage />}/> */}
-          </Routes>
-        </>
-         :
-        <AuthPage setUser={setUser}/>
+        user
+          ? <>
+            <Routes>
+              {/* <Route path="/" element={<NewOrderPage />}/> */}
+            </Routes>
+          </>
+          : <AuthPage setUser={setUser} />
       }
     </main>
-  );
+  )
 }
 
-export default App;
+export default App

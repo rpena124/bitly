@@ -1,3 +1,3 @@
-export default function Buttons() {
-  return <>Buttons</>;
+export default function Buttons () {
+  return <>Buttons</>
 }

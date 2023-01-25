@@ -1,3 +1,3 @@
-export default function ShortenForm() {
-  return <>Shorten Form</>;
+export default function ShortenForm () {
+  return <>Shorten Form</>
 }
