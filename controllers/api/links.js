@@ -1,10 +1,10 @@
 const Link = require('../../models/link')
 
 const User = require('../../models/user')
-
+const LinkSerialNumber = require('../../models/linkSerialNumber')
 
 const crypto = require('crypto')
-let linkSerialNumber = 0 // This will be changed to model tracked input
+// let linkSerialNumber = 0 // This will be changed to model tracked input
 
 
 const dataController = {
@@ -36,7 +36,7 @@ const dataController = {
     },
     //Create
     create(req, res, next) {
-      req.body.shortUrl = shortLink(req.body.link)
+      req.body.shortUrl = shortLink()
       Link.create(req.body, (err, createdLink) => {
         if (err) {
           res.status(400).send({
@@ -44,7 +44,6 @@ const dataController = {
           })
         } else {
           res.locals.data.link = createdLink
-          linkSerialNumber++
           next()
         }
       })
@@ -64,19 +63,21 @@ const dataController = {
     },
     async update (req, res, next) {
       try {
-    
       const user = await User.findById(req.params.id)
-      console.log(user)
+      const counter = await LinkSerialNumber.findById(req.params.serialId)
+      console.log(counter.linkSerialNumber)
+      req.body.shortUrl = shortLink(counter.linkSerialNumber)
+      
       Link.create(req.body, (err, createdLink) => {
         if (err) {
           res.status(400).send({
             msg: err.message,
           })
         } else {
-          console.log(createdLink._id)
-              user.links.addToSet(createdLink._id)              
-              user.save()
-              console.log(user)
+            user.links.addToSet(createdLink._id)              
+            user.save()
+            counter.linkSerialNumber++
+            counter.save()
           res.locals.data.link = createdLink
           next()
         }
@@ -106,18 +107,21 @@ const dataController = {
     dataController
   }
 
-function shortLink() {
-  const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+function shortLink(counter) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   let result = ''
 
   for (let i = 0; i < 25; i++) {
       result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
 
-  const hashResult = crypto.createHmac('sha256', 'secret').update(result).digest('hex').split('').reverse().join('')
-  const randomSelection = Math.floor(Math.random() * (hashResult.length - 7))
-  let linkTemplate = hashResult.substring(randomSelection, randomSelection + 7).split('')
-  linkTemplate.unshift(linkSerialNumber)
+  const counterHash = crypto.createHmac('sha256', 'forerunner').update(counter.toString()).digest('hex')
+  const hashResult = crypto.createHmac('sha256', 'reclaimer').update(result).digest('hex')
 
-  return linkTemplate.join('').substring(0, 6);
+  const randomSelection = Math.floor(Math.random() * (hashResult.length - 7))
+
+  const linkTemplate = hashResult.substring(randomSelection, randomSelection + 7).split('')
+  linkTemplate.unshift(counterHash.substring(0, 3))
+
+  return linkTemplate.join('').substring(0, 7);
 }
