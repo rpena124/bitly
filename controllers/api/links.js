@@ -1,5 +1,9 @@
 const Link = require('../../models/link')
+
 const User = require('../../models/user')
+
+
+const crypto = require('crypto')
 
 
 const dataController = {
@@ -31,6 +35,7 @@ const dataController = {
     },
     //Create
     create(req, res, next) {
+      req.body.shortUrl = shortLink(req.body.link)
       Link.create(req.body, (err, createdLink) => {
         if (err) {
           res.status(400).send({
@@ -98,3 +103,20 @@ const dataController = {
     apiController,
     dataController
   }
+
+function shortLink() {
+  const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = ''
+
+  for (let i = 0; i < 8; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  const hashResult = crypto.createHmac('sha256', 'secret').update(result).digest('hex').split('').reverse().join('')
+  const randomSelection = Math.floor(Math.random() * (hashResult.length - 7))
+  let linkTemplate = hashResult.substring(randomSelection, randomSelection + 7)
+  return linkTemplate;
+}
+
+
+
+console.log(shortLink())
