@@ -18,7 +18,7 @@ const userSchema = new Schema({
     minLength: 3,
     required: true
   },
-  link:[{type: Schema.Types.ObjectId, ref:'Link'}]
+  links:[{type: Schema.Types.ObjectId, ref:'Link'}]
 }, {
   timestamps: true,
   toJSON: {

@@ -1,4 +1,5 @@
 const Link = require('../../models/link')
+const User = require('../../models/user')
 
 
 const dataController = {
@@ -53,7 +54,33 @@ const dataController = {
           next()
         }
       })
-    }
+    },
+    async update (req, res, next) {
+      try {
+    
+      const user = await User.findById(req.params.id)
+      console.log(user)
+      Link.create(req.body, (err, createdLink) => {
+        if (err) {
+          res.status(400).send({
+            msg: err.message,
+          })
+        } else {
+          console.log(createdLink._id)
+              user.links.addToSet(createdLink._id)              
+              user.save()
+              console.log(user)
+          res.locals.data.link = createdLink
+          next()
+        }
+      })
+  
+      }
+      catch{
+        res.status(400).json("stupid error");
+      }
+  
+    },
   
   }
 
