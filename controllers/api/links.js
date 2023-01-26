@@ -38,7 +38,6 @@ const dataController = {
         })
       } else {
         res.locals.data.link = createdLink
-        // linkSerialNumber++
         next()
       }
     })
@@ -58,7 +57,7 @@ const dataController = {
   async update (req, res, next) {
     try {
       const user = await User.findById(req.params.userId)
-      console.log(user)
+
       req.body.shortUrl = shortLink(req.body.url)
       Link.create(req.body, (err, createdLink) => {
         if (err) {
@@ -66,10 +65,12 @@ const dataController = {
             msg: err.message
           })
         } else {
-          console.log(createdLink._id)
-          user.links.addToSet(createdLink._id)
-          user.save()
-          // console.log(user)
+
+            user.links.addToSet(createdLink._id)              
+            user.save()
+            counter.linkSerialNumber++
+            counter.save()
+
           res.locals.data.link = createdLink
           next()
         }
