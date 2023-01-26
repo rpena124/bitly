@@ -1,3 +1,3 @@
-export default function Content() {
-  return <>Content</>;
+export default function Content () {
+  return <>Content</>
 }

@@ -1,3 +1,3 @@
-export default function Features() {
-  return <>Features</>;
+export default function Features () {
+  return <>Features</>
 }

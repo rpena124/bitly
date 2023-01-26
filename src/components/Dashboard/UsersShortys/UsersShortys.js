@@ -1,3 +1,3 @@
-export default function UsersShortys() {
-  return <>User's Shortys</>;
+export default function UsersShortys () {
+  return <>User's Shortys</>
 }

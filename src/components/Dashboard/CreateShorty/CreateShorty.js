@@ -1,3 +1,3 @@
-export default function CreateShorty() {
-  return <>Create Shorty</>;
+export default function CreateShorty () {
+  return <>Create Shorty</>
 }

@@ -1,6 +1,6 @@
 const Link = require('../../models/link')
-
 const User = require('../../models/user')
+
 const LinkSerialNumber = require('../../models/linkSerialNumber')
 
 const crypto = require('crypto')
@@ -71,49 +71,56 @@ const dataController = {
       Link.create(req.body, (err, createdLink) => {
         if (err) {
           res.status(400).send({
-            msg: err.message,
+            msg: err.message
           })
         } else {
+
             user.links.addToSet(createdLink._id)              
             user.save()
             counter.linkSerialNumber++
             counter.save()
+
           res.locals.data.link = createdLink
           next()
         }
       })
-  
-      }
-      catch{
-        res.status(400).json("stupid error");
-      }
-  
-    },
-  
-  }
-
-  const apiController = {
-
-    index(req, res, next) {
-      res.json(res.locals.data.links)
-    },
-    show(req, res, next) {
-      res.json(res.locals.data.link)
+    } catch {
+      res.status(400).json('stupid error')
     }
   }
 
-  module.exports = {
-    apiController,
-    dataController
+}
+
+const apiController = {
+
+  index (req, res, next) {
+    res.json(res.locals.data.links)
+  },
+  show (req, res, next) {
+    res.json(res.locals.data.link)
   }
+}
+
+module.exports = {
+  apiController,
+  dataController
+}
+
+const shortLink = (longUrl) => {
+  const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  const hashUrl = crypto.createHmac('sha256', 'reclaimer').update(longUrl).digest('hex')
+  let input = parseInt((hashUrl.match(/[0-9]/g) || []).join(''))
+
 
 function shortLink(counter) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   let result = ''
 
-  for (let i = 0; i < 25; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
+  while (input > 0) {
+    result += characters[input % 62]
+    input = Math.floor(input / 62)
   }
+
 
   const counterHash = crypto.createHmac('sha256', 'forerunner').update(counter.toString()).digest('hex')
   const hashResult = crypto.createHmac('sha256', 'reclaimer').update(result).digest('hex')
@@ -124,4 +131,5 @@ function shortLink(counter) {
   linkTemplate.unshift(counterHash.substring(0, 3))
 
   return linkTemplate.join('').substring(0, 7);
+
 }

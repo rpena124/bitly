@@ -1,3 +1,3 @@
-export default function Questions() {
-  return <>Questions</>;
+export default function Questions () {
+  return <>Questions</>
 }
