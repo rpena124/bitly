@@ -34,10 +34,7 @@ app.get('/:shortUrl', async (req, res) => {
   const shortUrl = await Link.findOne({ shortUrl: req.params.shortUrl })
   console.log(shortUrl)
   if (shortUrl == null) return res.sendStatus(404)
-
-  shortUrl.clicks++
-  shortUrl.save()
-
+  
   res.redirect(shortUrl.url)
 })
 
