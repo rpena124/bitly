@@ -42,6 +42,19 @@ const dataController = {
       }
     })
   },
+  // Update
+  update (req, res, next) {
+    Link.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updatedLink) => {
+      if (err) {
+        res.status(400).send({
+          msg: err.message
+        })
+      } else {
+        res.locals.data.link = updatedLink
+        next()
+      }
+    })
+  },
   // Show
   show (req, res, next) {
     Link.findById(req.params.id, (err, foundLink) => {
@@ -54,7 +67,7 @@ const dataController = {
       }
     })
   },
-  async update (req, res, next) {
+  async createLinkForLoggedInUser (req, res, next) {
     try {
       const user = await User.findById(req.params.userId)
 
