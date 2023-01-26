@@ -24,8 +24,6 @@ app.use(express.static(path.join(__dirname, 'build')))
 app.use('/api', routes) <====== Finish code once you got it
 */
 app.use('/api/users', require('./routes/api/users'))
-
-app.use('/api/oneTimeLinks', require('./routes/api/oneTimeLinks'))
 app.use('/api/links', require('./routes/api/links'))
 
 // app.get('*', (req, res) => {
