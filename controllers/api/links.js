@@ -57,8 +57,9 @@ const dataController = {
   },
   async update (req, res, next) {
     try {
-      const user = await User.findById(req.params.id)
+      const user = await User.findById(req.params.userId)
       console.log(user)
+      req.body.shortUrl = shortLink(req.body.url)
       Link.create(req.body, (err, createdLink) => {
         if (err) {
           res.status(400).send({
@@ -97,7 +98,7 @@ module.exports = {
 
 const shortLink = (longUrl) => {
   const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  const hashUrl = crypto.createHmac('sha256', 'reclaimer').update(longUrl).digest('hex')
+  const hashUrl = crypto.createHmac('sha256', 'reclaimer').update(longUrl).update(Date.now().toString()).digest('hex')
   let input = parseInt((hashUrl.match(/[0-9]/g) || []).join(''))
 
   let result = ''
