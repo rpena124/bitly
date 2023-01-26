@@ -68,8 +68,6 @@ const dataController = {
 
             user.links.addToSet(createdLink._id)              
             user.save()
-            counter.linkSerialNumber++
-            counter.save()
 
           res.locals.data.link = createdLink
           next()
