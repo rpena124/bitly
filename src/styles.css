@@ -3,3 +3,29 @@
   margin: 0;
   padding: 0;
 }
+
+body {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+}
+
+input, button {
+  margin: 10px;
+  height: 100px;
+}
+
+input {
+  padding: 0 20px;
+  width: 400px;
+}
+
+button {
+  width: 100px;
+}
+
+button.disabled {
+  opacity: .5;
+  pointer-events: none;
+}
