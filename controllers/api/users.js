@@ -3,7 +3,7 @@
 const User = require("../../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-
+const Link = require('../../models/link')
 const checkToken = (req, res) => {
   console.log("req.user", req.user);
   res.json(req.exp);
@@ -13,6 +13,10 @@ const dataController = {
   async create(req, res, next) {
     try {
       const user = await User.create(req.body);
+      const createdUser = await User.findById(user._id).populate('links').exec()
+      createdUser.links[0].userId = createdUser._id
+      createdUser.links[0].save()
+
       // token will be a string
       const token = createJWT(user);
       // send back the token as a string
