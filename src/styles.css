@@ -11,6 +11,16 @@ body {
   justify-content: center;
 }
 
+.pop-up {
+  background-color: black;
+  color: #fff;
+  left: 50%;
+  padding: 100px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
 input, button {
   margin: 10px;
   height: 100px;
