@@ -5,6 +5,7 @@ import { getUser } from "../../utilities/users-service";
 import SignUpForm from "../../components/SignUpForm/SignUpForm";
 import UserDashboard from "../UserDashboard/UserDashboard";
 import HomePage from "../HomePage/HomePage";
+import LinkTree from "../LinkTree/LinkTree";
 
 function App() {
   const [user, setUser] = useState(getUser());
@@ -95,6 +96,7 @@ function App() {
             />
           }
         />
+        <Route path='/linkTree/:userId' element={<LinkTree />} />
         {user ? (
           <Route
             path="/dashboard"

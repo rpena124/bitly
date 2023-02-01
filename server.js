@@ -6,6 +6,7 @@ const path = require("path");
 const favicon = require("serve-favicon");
 const logger = require("morgan");
 const Link = require("./models/link");
+const User = require("./models/user");
 const PORT = process.env.PORT || 3001;
 
 const app = express();
@@ -37,6 +38,14 @@ app.get("/:shortUrl", async (req, res) => {
   if (shortUrl == null) return res.sendStatus(404);
 
   res.redirect(shortUrl.url);
+});
+
+app.get("/linkTree/:userId", async (req, res) => {
+  const user = await User.findOne({ userId: req.params.userId });
+  console.log(user)
+  if (req.params.userId == null) return res.sendStatus(404);
+  
+  res.send(user.linkTree)
 });
 
 app.listen(PORT, () => {

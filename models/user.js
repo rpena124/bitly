@@ -19,8 +19,8 @@ const userSchema = new Schema({
     required: true
   },
   links: [{ type: Schema.Types.ObjectId, ref: 'Link' }],
-  linkTree: [{ type: Schema.Types.ObjectId, ref: 'Link' }]
-
+  linkTree: [{ type: Schema.Types.ObjectId, ref: 'Link' }],
+  linkTreeUrl: { type: String, required: false, default: '' }
 }, {
   timestamps: true,
   toJSON: {
