@@ -6,6 +6,7 @@ const linkSchema = new Schema(
     shortUrl: { type: String, required: true, default: "" },
     userId: { type: String, required: false, default: "" },
     title: { type: String, required: false, default: "" },
+    linkTree: { type: Boolean, required: false, default: ""},
     date: {
       type: String,
       default: new Date().toLocaleDateString("en-us", {
