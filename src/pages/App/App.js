@@ -41,10 +41,11 @@ function App() {
 
   const navigate = useNavigate();
 
-  const [createLink, setCreateLink] = useState("");
-  const [newlyCreatedLink, setNewlyCreatedLink] = useState({
+  const [userLink, setUserLink] = useState("");
+  const [newUserLink, setNewUserLink] = useState({
     url: "",
   });
+
   const createUserLink = async (e) => {
     e.preventDefault();
     try {
@@ -54,11 +55,11 @@ function App() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ...newlyCreatedLink,
+          ...newUserLink,
         }),
       });
       const data = await response.json();
-      setCreateLink(data);
+      setUserLink(data);
       setShowShortenedUrl(true);
     } catch (error) {
       console.error(error);
@@ -66,8 +67,8 @@ function App() {
   };
 
   const handleUserLinkChange = (evt) => {
-    setNewlyCreatedLink({
-      ...newlyCreatedLink,
+    setNewUserLink({
+      ...newUserLink,
       [evt.target.name]: evt.target.value,
     });
   };
@@ -90,8 +91,12 @@ function App() {
               signUpModal={signUpModal}
               setSignUpModal={setSignUpModal}
               showShortenedUrl={showShortenedUrl}
+              setShowShortenedUrl={setShowShortenedUrl}
               createUserLink={createUserLink}
-              newlyCreatedLink={newlyCreatedLink}
+              userLink={userLink}
+              setUserLink={setUserLink}
+              newUserLink={newUserLink}
+              setNewUserLink={setNewUserLink}
               handleUserLinkChange={handleUserLinkChange}
             />
           }
@@ -106,10 +111,10 @@ function App() {
                 setUser={setUser}
                 showShortenedUrl={showShortenedUrl}
                 setShowShortenedUrl={setShowShortenedUrl}
-                createLink={createLink}
-                setCreateLink={setCreateLink}
-                newlyCreatedLink={newlyCreatedLink}
-                setNewlyCreatedLink={setNewlyCreatedLink}
+                userLink={userLink}
+                setUserLink={setUserLink}
+                newUserLink={newUserLink}
+                setNewUserLink={setNewUserLink}
                 createUserLink={createUserLink}
                 handleUserLinkChange={handleUserLinkChange}
               />
