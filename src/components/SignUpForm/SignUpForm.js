@@ -21,12 +21,15 @@ export default class SignUpForm extends Component {
 
   handleSubmit = async (evt) => {
     evt.preventDefault();
+
     try {
       const formData = { ...this.state };
       delete formData.error;
       delete formData.confirm;
       const user = await signUp(formData);
+      console.log(user);
       this.props.setUser(user);
+      // this.props.navigate.navigate("/dashboard");
     } catch (error) {
       this.setState({ error: "Sign Up Failed" });
     }
@@ -34,6 +37,7 @@ export default class SignUpForm extends Component {
 
   render() {
     const disable = this.state.password !== this.state.confirm;
+
     return (
       <div>
         <div className="form-container">

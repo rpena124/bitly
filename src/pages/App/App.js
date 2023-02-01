@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import AuthPage from "../AuthPage/AuthPage";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { getUser } from "../../utilities/users-service";
 import SignUpForm from "../../components/SignUpForm/SignUpForm";
 import UserDashboard from "../UserDashboard/UserDashboard";
@@ -38,15 +38,49 @@ function App() {
     setNewGlobalLink({ ...newGlobalLink, [evt.target.name]: evt.target.value });
   };
 
+  const navigate = useNavigate();
+
+  const [createLink, setCreateLink] = useState("");
+  const [newlyCreatedLink, setNewlyCreatedLink] = useState({
+    url: "",
+  });
+  const createUserLink = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`api/links/${user._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...newlyCreatedLink,
+        }),
+      });
+      const data = await response.json();
+      setCreateLink(data);
+      setShowShortenedUrl(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleUserLinkChange = (evt) => {
+    setNewlyCreatedLink({
+      ...newlyCreatedLink,
+      [evt.target.name]: evt.target.value,
+    });
+  };
+
   useEffect(() => {}, []);
 
   return (
-    <main className="App">
+    <>
       <Routes>
         <Route
           path="/"
           element={
             <HomePage
+              user={user}
               setUser={setUser}
               globalLink={globalLink}
               createGlobalLink={createGlobalLink}
@@ -55,20 +89,41 @@ function App() {
               signUpModal={signUpModal}
               setSignUpModal={setSignUpModal}
               showShortenedUrl={showShortenedUrl}
+              createUserLink={createUserLink}
+              newlyCreatedLink={newlyCreatedLink}
+              handleUserLinkChange={handleUserLinkChange}
             />
           }
         />
-        <Route path="/dashboard" element={<UserDashboard user={user} />} />
+        {user ? (
+          <Route
+            path="/dashboard"
+            element={
+              <UserDashboard
+                user={user}
+                setUser={setUser}
+                showShortenedUrl={showShortenedUrl}
+                setShowShortenedUrl={setShowShortenedUrl}
+                createLink={createLink}
+                setCreateLink={setCreateLink}
+                newlyCreatedLink={newlyCreatedLink}
+                setNewlyCreatedLink={setNewlyCreatedLink}
+                createUserLink={createUserLink}
+                handleUserLinkChange={handleUserLinkChange}
+              />
+            }
+          />
+        ) : (
+          ""
+        )}
       </Routes>
 
       {user ? (
         <></>
       ) : (
-        <>
-          <AuthPage setUser={setUser} />
-        </>
+        <>{/* <AuthPage setUser={setUser} navigate={navigate} /> */}</>
       )}
-    </main>
+    </>
   );
 }
 
