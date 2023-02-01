@@ -21,13 +21,14 @@ export default function HomePage({
   return (
     <header className="flex">
       <div id="waves" />
-      {/* {signUpModal ? (
+      {signUpModal ? (
         <div className="pop-up">
           <SignUpForm setUser={setUser} globalLink={globalLink._id} />
         </div>
       ) : (
         ""
-      )} */}
+      )}
+
       {/* <div
         onClick={() => {
           logOut();
@@ -35,7 +36,8 @@ export default function HomePage({
         }}
       >
         LOG OUT
-      </div> */}
+      </div>  */}
+
       <h1>Link Size Matters...</h1>
       <h2>
         Nobody likes a link that's too big. Impress your friends with one that's
@@ -118,7 +120,14 @@ export default function HomePage({
       </div>
       <div id="sign-up-message" className={showShortenedUrl ? "" : "hide"}>
         Want to save this link and the others you create? Sign up{" "}
-        <span>here</span>!
+        <span
+          onClick={() => {
+            setSignUpModal(true);
+          }}
+        >
+          here
+        </span>
+        !
       </div>
     </header>
   );
