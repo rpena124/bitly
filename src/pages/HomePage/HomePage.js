@@ -55,9 +55,13 @@ export default function HomePage({
               SHORTY
             </div>
 
-            <div>
-              <button>Login</button>
-              <button>Register</button>
+            <div id="user-buttons" className="flex">
+              <div id="login-button">
+                <button>Login</button>
+              </div>
+              <div id="register-button">
+                <button>Register</button>
+              </div>
             </div>
           </nav>
         </div>
