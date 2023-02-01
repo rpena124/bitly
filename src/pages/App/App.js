@@ -12,6 +12,7 @@ function App() {
   const [globalLink, setGlobalLink] = useState("");
   const [newGlobalLink, setNewGlobalLink] = useState({
     url: "",
+    linkTree: false,
   });
 
   const [showShortenedUrl, setShowShortenedUrl] = useState(false);
@@ -44,6 +45,7 @@ function App() {
   const [userLink, setUserLink] = useState("");
   const [newUserLink, setNewUserLink] = useState({
     url: "",
+    LinkTree: false,
   });
 
   const createUserLink = async (e) => {
@@ -101,7 +103,7 @@ function App() {
             />
           }
         />
-        <Route path='/linkTree/:userId' element={<LinkTree />} />
+        <Route path="/linkTree/:userId" element={<LinkTree />} />
         {user ? (
           <Route
             path="/dashboard"
