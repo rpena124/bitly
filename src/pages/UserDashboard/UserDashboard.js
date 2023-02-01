@@ -5,10 +5,10 @@ export default function UserDashboard({
   setUser,
   showShortenedUrl,
   setShowShortenedUrl,
-  createLink,
-  setCreateLink,
-  newlyCreatedLink,
-  setNewlyCreatedLink,
+  userLink,
+  setUserLink,
+  newUserLink,
+  setNewUserLink,
   createUserLink,
   handleUserLinkChange,
 }) {
@@ -74,7 +74,7 @@ export default function UserDashboard({
 
   useEffect(() => {
     getUser();
-  }, [createLink]);
+  }, [userLink]);
 
   return (
     <>
@@ -83,22 +83,20 @@ export default function UserDashboard({
         <input
           type="url"
           name="url"
-          value={newlyCreatedLink.url}
+          value={newUserLink.url}
           onChange={handleUserLinkChange}
         />
 
-        <button className={newlyCreatedLink.url ? "" : "disabled"}>
-          Shorten
-        </button>
+        <button className={newUserLink.url ? "" : "disabled"}>Shorten</button>
       </form>
       {showShortenedUrl ? (
         <>
           <h1>
             <a
-              href={`http://localhost:3001/${createLink.shortUrl}`}
+              href={`http://localhost:3001/${userLink.shortUrl}`}
               target="_blank"
             >
-              http://localhost:3001/{createLink.shortUrl}
+              http://localhost:3001/{userLink.shortUrl}
             </a>
           </h1>
           .
