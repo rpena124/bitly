@@ -21,7 +21,12 @@ router.get('/', dataController.index, apiController.index)
 // GET /api/links - Show Route
 router.get('/:id', dataController.show, apiController.show)
 
+router.get('/linkTree/:id', dataController.showLinkTree, apiController.show)
+
+
 // GET /api/users/check-token
 router.get('/check-token', ensureLoggedIn, checkToken)
+
+
 
 module.exports = router

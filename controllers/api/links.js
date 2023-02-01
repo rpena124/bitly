@@ -42,22 +42,36 @@ const dataController = {
     });
   },
   // Update
-  update(req, res, next) {
-    Link.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true },
-      (err, updatedLink) => {
-        if (err) {
-          res.status(400).send({
-            msg: err.message,
-          });
-        } else {
-          res.locals.data.link = updatedLink;
-          next();
+  async update(req, res, next) {
+    try{
+      const user = await User.findById(req.params.userId);
+      req.body.linkTree = req.body.linkTree === 'on'? true : false
+      Link.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updatedLink) => {
+          if (err) {
+            res.status(400).send({
+              msg: err.message,
+            });
+          } else {
+            if(updatedLink.linkTree){
+              user.linkTree.addToSet(updatedLink._id)
+            }
+            else{
+              user.linkTree.remove(updatedLink._id)
+            }
+            user.save();
+            res.locals.data.link = updatedLink;
+            res.locals.data.user = user;
+            next();
+          }
         }
-      }
-    );
+      );
+
+    }
+    catch{
+      res.status(400).json("stupid error");
+
+    }
+   
   },
   // Show
   show(req, res, next) {
@@ -73,8 +87,9 @@ const dataController = {
   },
   async createLinkForLoggedInUser(req, res, next) {
     try {
-      const user = await User.findById(req.params.userId);
 
+      const user = await User.findById(req.params.userId);
+      req.body.linkTree = req.body.linkTree === 'on'? true : false
       req.body.shortUrl = shortLink(req.body.url);
       req.body.userId = req.params.userId;
       Link.create(req.body, (err, createdLink) => {
@@ -84,6 +99,9 @@ const dataController = {
           });
         } else {
           user.links.addToSet(createdLink._id);
+          if(createdLink.linkTree){
+            user.linkTree.addToSet(createdLink._id)
+          }
           user.save();
           res.locals.data.link = createdLink;
           res.locals.data.user = user;

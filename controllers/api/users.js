@@ -58,7 +58,7 @@ const dataController = {
   },
   async show(req, res, next) {
     try {
-      const user = await User.findById(req.params.id).populate("links").exec();
+      const user = await User.findById(req.params.id).populate("links").populate("linkTree").exec();
       if (!user) throw new Error();
       res.locals.data.user = user;
       next();
@@ -66,6 +66,17 @@ const dataController = {
       res.status(400).json("Bad request");
     }
   },
+  async showLinkTree(req, res, next){
+    try{
+      const user = await User.findById(req.params.id, {linkTree: 1, _id:0}).populate("linkTree").exec();
+      if(!user) throw new Error();
+      res.locals.data.user = user
+      next();
+    }
+    catch{
+      res.status(400).json("Can't get link tree")
+    }
+  }
 };
 
 const apiController = {
