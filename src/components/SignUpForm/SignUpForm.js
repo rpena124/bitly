@@ -41,6 +41,7 @@ export default class SignUpForm extends Component {
     return (
       <>
         <form autoComplete="off" onSubmit={this.handleSubmit} className="flex">
+          <h2>Join our community!</h2>
           <input
             type="text"
             name="name"
