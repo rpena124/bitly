@@ -27,13 +27,11 @@ export default function HomePage({
   return (
     <>
       <div id="pop-up" className={`flex ${signUpModal ? "" : "hide"}`}>
-        <SignUpForm setUser={setUser} globalLink={globalLink._id} />
+        <SignUpForm setUser={setUser} globalLink={globalLink} />
       </div>
+      <SignUpForm setUser={setUser} globalLink={globalLink}/>
+
       <LoginForm setUser={setUser} />
-
-      <SignUpForm setUser={setUser} globalLink={globalLink._id} />
-      <SignUpForm setUser={setUser} globalLink={globalLink._id} />
-
       {user ? (
         <div
           onClick={() => {

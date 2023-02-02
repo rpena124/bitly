@@ -9,7 +9,7 @@ import LinkTree from "../LinkTree/LinkTree";
 
 function App() {
   const [user, setUser] = useState(getUser());
-  const [globalLink, setGlobalLink] = useState("");
+  const [globalLink, setGlobalLink] = useState({});
   const [newGlobalLink, setNewGlobalLink] = useState({
     url: "",
     linkTree: false,
@@ -45,7 +45,7 @@ function App() {
   const [userLink, setUserLink] = useState("");
   const [newUserLink, setNewUserLink] = useState({
     url: "",
-    LinkTree: false,
+    linkTree: false,
   });
 
   const createUserLink = async (e) => {

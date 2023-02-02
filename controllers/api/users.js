@@ -16,10 +16,13 @@ const dataController = {
       const createdUser = await User.findById(user._id)
         .populate("links")
         .exec();
-      if(createdUser.links.length){
+        
+       if(createdUser.links?.length){
         createdUser.links[0].userId = createdUser._id;
         createdUser.links[0].save();
-      }  
+       } 
+      
+
       // token will be a string
       const token = createJWT(createdUser);
       // send back the token as a string
