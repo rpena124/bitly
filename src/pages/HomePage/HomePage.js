@@ -2,6 +2,7 @@ import { useState } from "react";
 import SignUpForm from "../../components/SignUpForm/SignUpForm";
 import { logOut } from "../../utilities/users-service";
 import { Link } from "react-router-dom";
+import LoginForm from "../../components/LoginForm/LoginForm";
 
 export default function HomePage({
   user,
@@ -25,9 +26,13 @@ export default function HomePage({
 
   return (
     <>
-      {/* <div id="pop-up" className={`flex ${signUpModal ? "" : "hide"}`}>
+      <div id="pop-up" className={`flex ${signUpModal ? "" : "hide"}`}>
         <SignUpForm setUser={setUser} globalLink={globalLink._id} />
-      </div> */}
+      </div>
+      <LoginForm setUser={setUser} />
+
+      <SignUpForm setUser={setUser} globalLink={globalLink._id} />
+      <SignUpForm setUser={setUser} globalLink={globalLink._id} />
 
       {user ? (
         <div
