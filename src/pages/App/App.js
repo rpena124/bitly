@@ -104,6 +104,7 @@ function App() {
           }
         />
         <Route path="/linkTree/:userId" element={<LinkTree />} />
+
         {user ? (
           <Route
             path="/dashboard"

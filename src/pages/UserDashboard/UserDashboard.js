@@ -156,15 +156,29 @@ export default function UserDashboard({
                 ) : (
                   ""
                 )}
-                <button
-                  onClick={() => {
-                    updateLink(_id, {
-                      linkTree: "on",
-                    });
-                  }}
-                >
-                  Link Tree
-                </button>
+                {linkTree === true ? (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      updateLink(_id, {
+                        linkTree: "off",
+                      });
+                    }}
+                  >
+                    Remove from Link Tree
+                  </button>
+                ) : (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      updateLink(_id, {
+                        linkTree: "on",
+                      });
+                    }}
+                  >
+                    Add to Link Tree
+                  </button>
+                )}
                 <br />
                 <br />
                 <br />
