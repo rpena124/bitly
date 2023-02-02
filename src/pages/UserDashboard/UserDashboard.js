@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import Content from "../../components/Dashboard/Content/Content";
+import Footer from "../../components/Footer/Footer";
 
 export default function UserDashboard({
   user,
@@ -78,6 +80,7 @@ export default function UserDashboard({
 
   return (
     <>
+    <Content />
       Hey, {user.name}! Your cat sucks.
       <form onSubmit={createUserLink}>
         <input
@@ -89,6 +92,7 @@ export default function UserDashboard({
 
         <button className={newUserLink.url ? "" : "disabled"}>Shorten</button>
       </form>
+      <Footer />
       {showShortenedUrl ? (
         <>
           <h1>

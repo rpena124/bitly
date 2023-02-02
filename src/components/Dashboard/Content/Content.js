@@ -1,3 +1,9 @@
+import DashboardContainer from "../DashboardContainer/DashboardContainer"
+
 export default function Content () {
-  return <>Content</>
+  return (
+    <div id="dashboard-cont-background">
+      <DashboardContainer />
+    </div>
+  )
 }
