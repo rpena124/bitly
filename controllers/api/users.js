@@ -12,16 +12,16 @@ const checkToken = (req, res) => {
 const dataController = {
   async create(req, res, next) {
     try {
+      console.log(req.body.linkTree);
       const user = await User.create(req.body);
       const createdUser = await User.findById(user._id)
         .populate("links")
         .exec();
-        
-       if(createdUser.links?.length){
+
+      if (createdUser.links?.length) {
         createdUser.links[0].userId = createdUser._id;
         createdUser.links[0].save();
-       } 
-      
+      }
 
       // token will be a string
       const token = createJWT(createdUser);
@@ -62,7 +62,10 @@ const dataController = {
   },
   async show(req, res, next) {
     try {
-      const user = await User.findById(req.params.id).populate("links").populate("linkTree").exec();
+      const user = await User.findById(req.params.id)
+        .populate("links")
+        .populate("linkTree")
+        .exec();
       if (!user) throw new Error();
       res.locals.data.user = user;
       next();
@@ -70,17 +73,18 @@ const dataController = {
       res.status(400).json("Bad request");
     }
   },
-  async showLinkTree(req, res, next){
-    try{
-      const user = await User.findById(req.params.id, {linkTree: 1, _id:0}).populate("linkTree").exec();
-      if(!user) throw new Error();
-      res.locals.data.user = user
+  async showLinkTree(req, res, next) {
+    try {
+      const user = await User.findById(req.params.id, { linkTree: 1, _id: 0 })
+        .populate("linkTree")
+        .exec();
+      if (!user) throw new Error();
+      res.locals.data.user = user;
       next();
+    } catch {
+      res.status(400).json("Can't get link tree");
     }
-    catch{
-      res.status(400).json("Can't get link tree")
-    }
-  }
+  },
 };
 
 const apiController = {

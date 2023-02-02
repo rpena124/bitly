@@ -49,7 +49,7 @@ export default function UserDashboard({
 
   const updateLink = async (id, updatedLink) => {
     try {
-      const response = await fetch(`/api/links/${id}`, {
+      const response = await fetch(`/api/links/${id}/user/${user._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export default function UserDashboard({
 
   return (
     <>
-    <Content />
+      {/* <Content /> */}
       Hey, {user.name}! Your cat sucks.
       <form onSubmit={createUserLink}>
         <input
@@ -92,7 +92,7 @@ export default function UserDashboard({
 
         <button className={newUserLink.url ? "" : "disabled"}>Shorten</button>
       </form>
-      <Footer />
+      {/* <Footer /> */}
       {showShortenedUrl ? (
         <>
           <h1>
@@ -110,14 +110,16 @@ export default function UserDashboard({
       )}
       {user && user.links
         ? user.links.map((link, i) => {
-            const { shortUrl, date, url, title, _id } = link;
+            const { shortUrl, date, url, title, linkTree, _id } = link;
             return (
               <li key={i}>
                 <a href={url} target="_blank">
-                  {title ? title : shortUrl}
-                </a>
+                  {title ? title : url.slice(8, 25)}
+                </a>{" "}
+                {linkTree === true ? "in linktree" : "not in link tree"}
                 <br />
                 {date}
+                <br />
                 <button
                   onClick={() => {
                     deleteLink(_id);
@@ -125,7 +127,6 @@ export default function UserDashboard({
                 >
                   Delete
                 </button>
-
                 <button
                   onClick={() => {
                     setShowEditLink(_id);
@@ -136,7 +137,6 @@ export default function UserDashboard({
                 >
                   Edit
                 </button>
-
                 {showEditLink === _id ? (
                   <form
                     onSubmit={(e) => {
@@ -156,6 +156,18 @@ export default function UserDashboard({
                 ) : (
                   ""
                 )}
+                <button
+                  onClick={() => {
+                    updateLink(_id, {
+                      linkTree: "on",
+                    });
+                  }}
+                >
+                  Link Tree
+                </button>
+                <br />
+                <br />
+                <br />
               </li>
             );
           })
