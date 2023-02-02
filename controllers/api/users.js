@@ -85,6 +85,21 @@ const dataController = {
       res.status(400).json("Can't get link tree");
     }
   },
+  async showShortenLinkTree(req, res, next) {
+    try {
+      const user = await User.findOne(
+        { name: req.params.name },
+        { linkTree: 1, _id: 0 }
+      )
+        .populate("linkTree")
+        .exec();
+      if (!user) throw new Error();
+      res.locals.data.user = user;
+      next();
+    } catch {
+      res.status(400).json("Can't get link tree");
+    }
+  },
 };
 
 const apiController = {

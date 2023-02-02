@@ -3,11 +3,11 @@ import { useParams } from "react-router-dom";
 
 export default function LinkTree() {
   const [userLinkTree, setuserLinkTree] = useState({});
-  let { userId } = useParams();
+  let { name } = useParams();
 
   const getUserLinkTree = async () => {
     try {
-      const response = await fetch(`/api/users/linkTree/${userId}`, {
+      const response = await fetch(`/api/users/linkTree/${name}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

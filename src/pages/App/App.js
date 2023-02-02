@@ -103,7 +103,7 @@ function App() {
             />
           }
         />
-        <Route path="/linkTree/:userId" element={<LinkTree />} />
+        <Route path="/:name" element={<LinkTree />} />
 
         {user ? (
           <Route
