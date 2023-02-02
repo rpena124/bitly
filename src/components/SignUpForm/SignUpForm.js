@@ -1,76 +1,77 @@
-import { Component } from "react";
+// import { Component } from "react";
 import { signUp } from "../../utilities/users-service";
+import { useState, useEffect } from "react";
 
-export default class SignUpForm extends Component {
-  state = {
-    name: "",
-    email: "",
-    password: "",
-    confirm: "",
-    links: [this.props.globalLink],
-    error: "",
-  };
+export default function SignUpForm({globalLink, setUser}){
 
-  handleChange = (evt) => {
-    this.setState({
-      ...this.state,
-      [evt.target.name]: evt.target.value,
-      error: "",
-    });
-  };
+  const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        password: "",
+        confirm: "",
+  })
+  const [links, setLinks] = useState([globalLink?._id])
+  const [error, setError] = useState('')
 
-  handleSubmit = async (evt) => {
-    evt.preventDefault();
+  const handleChange = (evt) => {
+    setFormData({ ...formData, [evt.target.name]: evt.target.value })
+    setError('')
+  }
 
+  const handleSubmit = async (evt) => {
+    evt.preventDefault()
     try {
-      const formData = { ...this.state };
-      delete formData.error;
-      delete formData.confirm;
-      const user = await signUp(formData);
-      console.log(user);
-      this.props.setUser(user);
-      // this.props.navigate.navigate("/dashboard");
+      const formDataCopy = {...formData}
+      if(links[0]){
+        formDataCopy.links = [...links]
+      }
+      delete formDataCopy.confirm
+      const user = await signUp(formDataCopy)
+      setUser(user)
     } catch (error) {
-      this.setState({ error: "Sign Up Failed" });
+      setError(error.message)
     }
-  };
+  }
 
-  render() {
-    const disable = this.state.password !== this.state.confirm;
+  useEffect(()=>{
+    setLinks([globalLink._id])
+  },[globalLink])
 
-    return (
-      <>
-        <form autoComplete="off" onSubmit={this.handleSubmit} className="flex">
-          <h2>Join our community!</h2>
+  const disable = formData.password !== formData.confirm;
+
+  return(
+<>
+<form autoComplete="off" onSubmit={handleSubmit} className="flex">
+           <h2>Join our community!</h2>
           <input
             type="text"
             name="name"
-            value={this.state.name}
-            onChange={this.handleChange}
+            value={formData.name}
+            onChange={handleChange}
             placeholder="Name"
             required
           />
           <input
             type="email"
             name="email"
-            value={this.state.email}
-            onChange={this.handleChange}
+            value={formData.email}
+            onChange={handleChange}
             placeholder="Email address"
             required
           />
           <input
             type="password"
             name="password"
-            value={this.state.password}
-            onChange={this.handleChange}
+            value={formData.password}
+            onChange={handleChange}
             placeholder="Password"
             required
           />
           <input
             type="password"
             name="confirm"
-            value={this.state.confirm}
-            onChange={this.handleChange}
+            value={formData.confirm}
+            onChange={handleChange}
             placeholder="Confirm password"
             required
           />
@@ -78,8 +79,9 @@ export default class SignUpForm extends Component {
             Sign up
           </button>
         </form>
-        <h1 className="error-message">&nbsp;{this.state.error}</h1>
-      </>
-    );
-  }
+        <h1 className="error-message">&nbsp;{error}</h1></>
+
+  )
+
 }
+
