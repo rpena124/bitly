@@ -245,11 +245,11 @@ export default function UserDashboard({
                         className="link-short"
                         onClick={() => {
                           navigator.clipboard.writeText(
-                            `http://localhost:3000/${shortUrl}`
+                            `http://localhost:3001/${shortUrl}`
                           );
                         }}
                       >
-                        http://localhost:3000/{shortUrl}
+                        http://localhost:3001/{shortUrl}
                       </div>
                       <div className="link-long">{url}</div>
                       {date}
