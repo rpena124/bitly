@@ -11,6 +11,7 @@ const linkSchema = new Schema(
       type: String,
       default: "",
     },
+    clicks: { type: Number, required: true, default: 0 }
   },
   {
     timestamps: true,
