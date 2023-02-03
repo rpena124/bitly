@@ -46,6 +46,7 @@ function App() {
   const [newUserLink, setNewUserLink] = useState({
     url: "",
     linkTree: false,
+    title: "",
   });
 
   const createUserLink = async (e) => {

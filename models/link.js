@@ -9,12 +9,7 @@ const linkSchema = new Schema(
     linkTree: { type: Boolean, required: false, default: false },
     date: {
       type: String,
-      default: new Date().toLocaleDateString("en-us", {
-        weekday: "short",
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      }),
+      default: "",
     },
   },
   {

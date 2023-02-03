@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SignUpForm from "../../components/SignUpForm/SignUpForm";
 import { logOut } from "../../utilities/users-service";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import LoginForm from "../../components/LoginForm/LoginForm";
 
 export default function HomePage({
@@ -11,39 +12,22 @@ export default function HomePage({
   createGlobalLink,
   newGlobalLink,
   handleChange,
-  signUpModal,
-  setSignUpModal,
   showShortenedUrl,
   setShowShortenedUrl,
   createUserLink,
   userLink,
-  setUserLink,
   newUserLink,
   setNewUserLink,
   handleUserLinkChange,
 }) {
   const [showCopyMessage, setShowCopyMessage] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
+
+  const navigate = useNavigate();
 
   return (
     <>
-      <div id="pop-up" className={`flex ${signUpModal ? "" : "hide"}`}>
-        <SignUpForm setUser={setUser} globalLink={globalLink} />
-      </div>
-      <SignUpForm setUser={setUser} globalLink={globalLink}/>
-
-      <LoginForm setUser={setUser} />
-      {user ? (
-        <div
-          onClick={() => {
-            logOut();
-            setUser("");
-          }}
-        >
-          LOG OUT
-        </div>
-      ) : (
-        ""
-      )}
       <header className="flex">
         <div id="nav-container" className="flex">
           <nav className="flex">
@@ -59,12 +43,65 @@ export default function HomePage({
             </div>
 
             <div id="user-buttons" className="flex">
-              <div id="login-button">
-                <button>Login</button>
-              </div>
-              <div id="register-button">
-                <button>Register</button>
-              </div>
+              {user ? (
+                <button
+                  id="login-button"
+                  className="login-register"
+                  onClick={() => {
+                    logOut();
+                    setUser("");
+                    setShowShortenedUrl(false);
+                    setNewUserLink({ url: "" });
+                  }}
+                >
+                  Logout
+                </button>
+              ) : (
+                <button
+                  id="login-button"
+                  className={`login-register ${showLogin ? "active" : ""}`}
+                  onClick={() => {
+                    setShowLogin(!showLogin);
+                    setShowRegister(false);
+                  }}
+                >
+                  Login
+                </button>
+              )}
+
+              {user ? (
+                <button
+                  id="register-button"
+                  className="login-register"
+                  onClick={() => {
+                    navigate("/dashboard");
+                  }}
+                >
+                  Dashboard
+                </button>
+              ) : (
+                <button
+                  id="register-button"
+                  className={`login-register ${showRegister ? "active" : ""}`}
+                  onClick={() => {
+                    setShowLogin(false);
+                    setShowRegister(!showRegister);
+                  }}
+                >
+                  Register
+                </button>
+              )}
+              <LoginForm
+                setUser={setUser}
+                showLogin={showLogin}
+                setShowShortenedUrl={setShowShortenedUrl}
+              />
+              <SignUpForm
+                setUser={setUser}
+                globalLink={globalLink}
+                showRegister={showRegister}
+                setShowShortenedUrl={setShowShortenedUrl}
+              />
             </div>
           </nav>
         </div>
@@ -83,10 +120,25 @@ export default function HomePage({
                 name="url"
                 value={newUserLink.url}
                 onChange={handleUserLinkChange}
+                placeholder="Paste your URL here..."
                 required
               />
 
-              <button>
+              <button
+                onClick={() => {
+                  setNewUserLink({
+                    ...newUserLink,
+                    date: new Date().toLocaleDateString("en-us", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                      hour12: true,
+                    }),
+                  });
+                }}
+              >
                 <svg
                   version="1.1"
                   xmlns="http://www.w3.org/2000/svg"
@@ -165,24 +217,16 @@ export default function HomePage({
         <div id="sign-up-message" className={showShortenedUrl ? "" : "hide"}>
           {user ? (
             <>
-              If you want to manage your links, visit the{" "}
-              <Link
-                to="/dashboard"
-                onClick={() => {
-                  setShowShortenedUrl(false);
-                  setNewUserLink({ url: "" });
-                }}
-              >
-                dashboard
-              </Link>
-              .
+              {user.name}, if you want to manage your links, visit the{" "}
+              <Link to="/dashboard">dashboard</Link>.
             </>
           ) : (
             <>
               Want to save this link and the others you create? Sign up{" "}
               <span
                 onClick={() => {
-                  setSignUpModal(true);
+                  setShowLogin(false);
+                  setShowRegister(!showRegister);
                 }}
               >
                 here
