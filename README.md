@@ -35,7 +35,7 @@ Overall, using a short URL can make sharing and promoting links more convenient,
 - Lucid
 - Trello
 
-# Getting Started: Links to the project's planning (Trello board) and the deployed app on Heroku.
+# Getting Started:
 
 [Wire Frame](https://www.figma.com/file/jvfxtQvrHaAasDKCLaA8P0/Bitly?node-id=0%3A1&t=AVtKmAf2Jc8hSJg5-0)
 
