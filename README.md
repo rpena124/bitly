@@ -37,18 +37,18 @@ Overall, using a short URL can make sharing and promoting links more convenient,
 
 # Getting Started: Links to the project's planning (Trello board) and the deployed app on Heroku.
 
-Wire Frame
+[Wire Frame](https://www.figma.com/file/jvfxtQvrHaAasDKCLaA8P0/Bitly?node-id=0%3A1&t=AVtKmAf2Jc8hSJg5-0)
 
-![https://www.figma.com/file/jvfxtQvrHaAasDKCLaA8P0/Bitly?node-id=0%3A1&t=AVtKmAf2Jc8hSJg5-0](/public/figma-home.png)
-![https://www.figma.com/file/jvfxtQvrHaAasDKCLaA8P0/Bitly?node-id=0%3A1&t=AVtKmAf2Jc8hSJg5-0](/public/figma-dashboard.png)
+![Figma](/public/figma-home.png)
+![Figma](/public/figma-dashboard.png)
 
-ERD
+[ERD](https://lucid.app/lucidchart/c039ad48-844f-4ec7-a0ec-915984ccca6a/edit?page=0_0&invitationId=inv_5727775a-102f-465a-aea4-508755e28f33#)
 
-![https://lucid.app/lucidchart/c039ad48-844f-4ec7-a0ec-915984ccca6a/edit?page=0_0&invitationId=inv_5727775a-102f-465a-aea4-508755e28f33#](/public/ERD.jpeg)
+![ERD](/public/ERD.jpeg)
 
-Trello
+[Trello](https://trello.com/b/qE5MKKid/bitly)
 
-![https://trello.com/b/qE5MKKid/bitly](/public/trello.png)
+![Trello](/public/trello.png)
 
 [Heroku](...)
 
@@ -65,6 +65,11 @@ Be sure to create a build folder:
 # Unsolved Problems: List any unsolved issues.
 
 # Future Enhancements:
+
+- User can generate a custome link
+- Link in Bio
+- Total Engagement
+- QR code generator
 
 # Collaborators:
 
