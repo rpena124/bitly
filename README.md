@@ -37,19 +37,25 @@ Overall, using a short URL can make sharing and promoting links more convenient,
 
 # Getting Started:
 
-[Wire Frame](https://www.figma.com/file/jvfxtQvrHaAasDKCLaA8P0/Bitly?node-id=0%3A1&t=AVtKmAf2Jc8hSJg5-0)
+## Low Fidelity Wireframes
+
+[Wireframe](https://www.figma.com/file/jvfxtQvrHaAasDKCLaA8P0/Bitly?node-id=0%3A1&t=AVtKmAf2Jc8hSJg5-0)
 
 ![Figma](/public/figma-home.png)
 ![Figma](/public/figma-dashboard.png)
 
+## ERD Diagrams
+
 [ERD](https://lucid.app/lucidchart/c039ad48-844f-4ec7-a0ec-915984ccca6a/edit?page=0_0&invitationId=inv_5727775a-102f-465a-aea4-508755e28f33#)
 
-
+### OG Diagram
 ![ERD](/public/ERD.jpeg)
 
-
+### Finalized Diagram
 ![Final ERD](https://i.imgur.com/Chke5s3.png)
 
+
+## Project Management
 [Trello](https://trello.com/b/qE5MKKid/bitly)
 
 ![Trello](/public/trello.png)
