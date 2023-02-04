@@ -44,7 +44,11 @@ Overall, using a short URL can make sharing and promoting links more convenient,
 
 [ERD](https://lucid.app/lucidchart/c039ad48-844f-4ec7-a0ec-915984ccca6a/edit?page=0_0&invitationId=inv_5727775a-102f-465a-aea4-508755e28f33#)
 
+
 ![ERD](/public/ERD.jpeg)
+
+
+![Final ERD](https://i.imgur.com/Chke5s3.png)
 
 [Trello](https://trello.com/b/qE5MKKid/bitly)
 
